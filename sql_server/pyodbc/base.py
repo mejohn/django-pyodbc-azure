@@ -8,7 +8,7 @@ import time
 from django.core.exceptions import ImproperlyConfigured
 from django import VERSION
 
-if VERSION[:3] < (2,1,0) or VERSION[:2] >= (2,2):
+if VERSION[:3] < (2,1,0):
     raise ImproperlyConfigured("Django %d.%d.%d is not supported." % VERSION[:3])
 
 try:
@@ -352,10 +352,10 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         cursor.execute('SET DATEFORMAT ymd; SET DATEFIRST %s' % datefirst)
 
         # http://blogs.msdn.com/b/sqlnativeclient/archive/2008/02/27/microsoft-sql-server-native-client-and-microsoft-sql-server-2008-native-client.aspx
-        val = cursor.execute('SELECT SYSDATETIME()').fetchone()[0]
-        if isinstance(val, str):
-            raise ImproperlyConfigured(
-                "The database driver doesn't support modern datatime types.")
+        #val = cursor.execute('SELECT SYSDATETIME()').fetchone()[0]
+        #if isinstance(val, str):
+        #    raise ImproperlyConfigured(
+        #        "The database driver doesn't support modern datatime types.")
 
     def is_usable(self):
         try:
